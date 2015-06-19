@@ -1,0 +1,67 @@
+@font-face {
+	font-family: 'FontAwesome';
+	src: url('./fontawesome-webfont.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+body {
+	font-family: "sans-serif";
+}
+td {
+	padding: 5px;
+}
+td.name {
+	max-width: 30vw;
+}
+td.error {
+	background-color: white;
+	color: #f00;
+	font-size:0.9em;
+}
+table { 
+    border-spacing: 1px;
+    border-collapse: separate;
+}
+thead {
+	font-weight:bold;
+}
+tr:nth-child(4n+1), tr:nth-child(4n+3) {
+    background-color: lightgrey;
+}
+.showqr, .sendmail {
+	font-family:'FontAwesome';
+	text-align:center;
+	cursor:default;
+	padding:0;
+}
+.showqr:hover, .sendmail:hover, .showqr:active, .sendmail:active {
+	color:#417B12;
+	font-size:130%;
+}
+.ok{
+	color:#417B12;
+}
+.ok:hover{
+	font-size:100%;
+}
+.showqr:active, .sendmail:active {
+	font-weight: bold;
+}
+#bank_details {
+	font-size:90%;
+  background-color: lightgrey;
+	display:inline;
+	padding:3px;
+}
+#sendall {
+	font-family:'monospace';
+	display: inline-block;
+	height:2rem;
+}
+#qrDiv{
+	position:fixed;
+	top:15%;
+	left:15%;
+	border:3px solid #555;
+	box-shadow:0px 0px 40px -20px rgba(0,0,0,1);
+}
