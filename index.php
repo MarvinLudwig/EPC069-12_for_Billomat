@@ -75,10 +75,10 @@ $me = callAPI("/api/clients/myself")->client;
 echo "<div id='bank_details'>Name: <span id='name'>".$me->bank_account_owner."</span>"
 	." - IBAN: <span id='iban'>".$me->bank_iban."</span>"
 	." - BIC: <span id='bic'>".$me->bank_swift."</span></div><br><br>"
-	."<div class='sendmail' id='sendall'>Alle selektierten Rechnungen senden <span>&#xf1d9;</span></div>";
+	."<div class='sendmail' id='sendall'>".msg('send_all_invoices')." <span>&#xf1d9;</span></div>";
 	
 //// output invoice and client information
-echo "<table><thead><td><input id='chkAll' type='checkbox'></td><td>RE-Nr.</td><td>Datum</td><td>KD-Nr.</td><td>Name u. Ort</td><td>Email</td><td>QR</td><td>Mail</td><td class='error'></td></thead><tbody id='invoices'>";
+echo "<table><thead><td><input id='chkAll' type='checkbox'></td><td>".msg('inv_no')."</td><td>".msg('date')."</td><td>".msg('client_no')."</td><td>".msg('name_city')."</td><td>Email</td><td>QR</td><td>Mail</td><td class='error'></td></thead><tbody id='invoices'>";
 foreach ($invoices as $invoice_id => $invoice){
 	$client_id = $invoice["client_id"];
 	$client = $clients[$client_id];
@@ -99,13 +99,16 @@ foreach ($invoices as $invoice_id => $invoice){
 		."<td>".$client_number."</td>"
 		."<td class='name'>".$client_name." - ".$client["city"]."</td>"
 		."<td><input type='email' value='".$client_email."'></td>"
-		."<td class='showqr' title='QR-Code für Rechnung $invoice_number anzeigen'>&#xf029;</td>"
-		."<td class='sendmail' title='Rechnung $invoice_number senden'>&#xf1d9;</td>"
+		."<td class='showqr' title='".msg('show_qr',array('invoice_number' => $invoice_number))."'>&#xf029;</td>"
+		."<td class='sendmail' title='".msg('send_mail',array('invoice_number' => $invoice_number))."'>&#xf1d9;</td>"
 		."<td class='error'></td>"
 		."</tr>";
 }
 echo "</tbody></table>";
 echo '<script type="text/javascript">var all_invoices = '.json_encode($invoices).';'
-	 .'CUT_PAYMENT_REFERENCE='.CUT_PAYMENT_REFERENCE.';</script>';
+	 .'CUT_PAYMENT_REFERENCE='.CUT_PAYMENT_REFERENCE.';'
+	 .'PAYLOAD_BYTE_ERROR_MSG_1="'.msg('cut_text').'";'
+	 .'PAYLOAD_BYTE_ERROR_MSG_2="'.msg('cut_text_shall_we').'";'
+	 .'</script>';
 ?>
 </body>
