@@ -4,8 +4,9 @@
 // Version 1.0
  
 require("config.php");
-require("EPC06912.php");
+require("lib/EPC06912/EPC06912.php");
 require("lib/qrcode/qrlib.php");
+
 
 if(ob_get_length() > 0) ob_end_flush();
 
@@ -14,7 +15,7 @@ $data = json_decode($input);
 // Show QR code
 if ($data->action == "SHOW_QR"){
 	$invoice = $data->invoices->invoice;
-	$epc = EPC06912::create($data->name,$data->bic,$data->iban,$invoice->amount,$invoice->payment_reference);
+	$epc = EPC06912::create($data->name,$data->bic,$data->iban,$invoice->amount,$invoice->payment_reference,LANG);
 	if ($epc != false) {
 		$qr = createQRCode($epc);
 		$result[] = array("id" => $invoice->id, "result" => "OK", "details" => $qr);
@@ -30,7 +31,7 @@ else if ($data->action == "SEND_MAIL"){
 	$file = fopen("invoices", "a"); 
 	foreach ($invoices as $invoice){
 		$result = array();
-		$epc = EPC06912::create($data->name,$data->bic,$data->iban,$invoice->amount,$invoice->payment_reference);
+		$epc = EPC06912::create($data->name,$data->bic,$data->iban,$invoice->amount,$invoice->payment_reference,LANG);
 		if ($epc != false) { 
 			if (filter_var($invoice->client_email, FILTER_VALIDATE_EMAIL)){
 				$qrCode = createQRCode($epc);
@@ -50,7 +51,7 @@ else if ($data->action == "SEND_MAIL"){
 				}
 			}
 			else {
-					$result[] = array("id" => $invoice->id, "error" => array("code" => 1, "message" => "Email address is invalid."));
+					$result[] = array("id" => $invoice->id, "error" => array("code" => 1, "message" => msg('email_invalid')));
 			}
 		}
 		else {
