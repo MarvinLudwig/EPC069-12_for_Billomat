@@ -7,7 +7,7 @@ require("config.php");
 require("EPC06912.php");
 require("lib/qrcode/qrlib.php");
 
-ob_end_flush();
+if(ob_get_length() > 0) ob_end_flush();
 
 $input = file_get_contents('php://input'); 	
 $data = json_decode($input);
@@ -34,11 +34,12 @@ else if ($data->action == "SEND_MAIL"){
 		if ($epc != false) { 
 			if (filter_var($invoice->client_email, FILTER_VALIDATE_EMAIL)){
 				$qrCode = createQRCode($epc);
-				$payload->email->recipients->to = $invoice->client_email;
+				$payload["email"]["recipients"]["to"] = $invoice->client_email;
+				$attachment = new stdClass();
 				$attachment->filename = QR_FILENAME;
 				$attachment->mimetype = "image/png";
 				$attachment->base64file = $qrCode;
-				$payload->email->attachments->attachment = $attachment;
+				$payload["email"]["attachments"]["attachment"] = $attachment;
 				$callResult = callAPI("/api/invoices/".$invoice->id."/email",$payload);
 				if (empty($callResult["error"])){
 					$result[] = array("id" => $invoice->id, "result" => "OK");
@@ -56,10 +57,9 @@ else if ($data->action == "SEND_MAIL"){
 			$result[] = array("id" => $invoice->id, "error" => EPC06912::$error);
 		}
 		echo json_encode($result);
-		ob_flush();
-		flush();;
+		if(ob_get_length() > 0) ob_flush();
+		flush();
 	}
-	//echo json_encode($result);
 }
 
 function createQRCode ($qr_payload){
