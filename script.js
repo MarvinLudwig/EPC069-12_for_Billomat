@@ -27,6 +27,8 @@ var FUNC =  {
 			var invoice_id = parent.attributes["data-invoice_id"].value;
 			var errorTD = document.querySelector("#invoice_"+invoice_id).querySelector(".error");
 			errorTD.innerHTML = "";
+			var sendmailTD = document.querySelector("#invoice_"+invoice_id).querySelector(".sendmail");
+			sendmailTD.innerHTML = "<img src='load.gif' width='30'>";
 			var invoice = all_invoices[invoice_id];
 			invoice.client_email = parent.querySelector('[type="email"]').value;
 			var invoices = {invoice};			
@@ -111,7 +113,7 @@ var FUNC =  {
 		}
 		else if (error.code == 2){ // we need input from user
 			var confirm_cut = false;
-			if (CUT_PAYMENT_REFERENCE == 0) confirm_cut = confirm(error.message+" We can cut the text, it would look like that:\r\n"+error.details+"\r\nShall we?"); 
+			if (CUT_PAYMENT_REFERENCE == 0) confirm_cut = confirm(error.message+" "+PAYLOAD_BYTE_ERROR_MSG_1+"\r\n"+error.details+"\r\n".PAYLOAD_BYTE_ERROR_MSG_2); 
 			if (CUT_PAYMENT_REFERENCE == 1 || confirm_cut == true) {
 				all_invoices[invoice.id].payment_reference = error.details;
 				func(document.querySelector("#invoice_"+invoice.id).querySelector(".sendmail"));
@@ -151,7 +153,6 @@ window.addEventListener('DOMContentLoaded', function ()
 function attachEvent (query, event, handler){
 	document.querySelectorAll(query).forEach(function(node){node.addEventListener(event,handler);});	
 }
-
 
 
 
