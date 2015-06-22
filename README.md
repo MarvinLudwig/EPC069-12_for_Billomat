@@ -42,6 +42,6 @@ Administration > Employees > click on employee > activate API access > Display A
 
 Billomat has a rate limit of 300 API calls per 15 minutes. It's summed up for all your applications that call the API. For this tool we need 1 to 3 calls per invoice (one to get the invoice, one to get the client, one to send the invoice). If you have a lot of invoices and / or some other applications that use the API, you should consider raising the limit to 1000 calls. Just go to Settings > Administration > Apps, register the app and enter APP_ID and APP_SECRET into the config.php file.
 
-## Third-party libraries:
+## Included third-party libraries:
 PHP QR Code under LGPL 3, Copyright (C) Dominik Dzienia, http://phpqrcode.sourceforge.net/  
 Font Awesome under SIL OFL 1.1,  Copyright (C) Dave Gandy, http://fortawesome.github.io/Font-Awesome/
