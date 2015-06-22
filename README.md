@@ -13,7 +13,7 @@ This is a bunch of simple PHP scripts with a GUI that let you send your Billomat
 * The script shows all invoices from Billomat that have the status "outstanding" (invoice must be completed) and the payment method "Transfer"
 * There are 3 actions: Show QR code, Send single invoices, Send all selected invoices
 * You can enter or change your client's email addresses in this tool, but it is recommended to have it in Billomat
-* It's not a must to create / show the QR code before sending an invoice, it's just for checking purposes. Read the code with a scanner or banking app. The results should like similar to this:
+* It's not a must to create / show the QR code before sending an invoice, it's just for checking purposes. Read the code with a scanner or banking app. The results should look similar to this:
  
         BCD                     - always BCD
         001                     - always 001
