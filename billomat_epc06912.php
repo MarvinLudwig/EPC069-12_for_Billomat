@@ -35,7 +35,8 @@ else if ($data->action == "SEND_MAIL"){
 		if ($epc != false) { 
 			if (filter_var($invoice->client_email, FILTER_VALIDATE_EMAIL)){
 				$qrCode = createQRCode($epc);
-				$payload["email"]["recipients"]["to"] = $invoice->client_email;
+				if (TEST_EMAIL != "") $payload["email"]["recipients"]["to"] = TEST_EMAIL;
+				else $payload["email"]["recipients"]["to"] = $invoice->client_email;
 				$attachment = new stdClass();
 				$attachment->filename = QR_FILENAME;
 				$attachment->mimetype = "image/png";
@@ -44,7 +45,7 @@ else if ($data->action == "SEND_MAIL"){
 				$callResult = BillomatAPI::call("/api/invoices/".$invoice->id."/email",$payload);
 				if (empty($callResult["error"])){
 					$result[] = array("id" => $invoice->id, "result" => "OK");
-					fputs($file, $invoice->id.";");
+					if (TEST_EMAIL == "") fputs($file, $invoice->id.";");
 				}
 				else {
 					$result[] = array("id" => $invoice->id, "error" => $callResult["error"]);
