@@ -15,7 +15,7 @@ require("config.php");
 $error = "";
 
 //// get own bank details
-$me = BillomatAPI::call("/api/clients/myself")->client;
+$me = callAPI("/api/clients/myself")->client;
 echo "<div id='bank_details'>Name: <span id='name'>".$me->bank_account_owner."</span>"
 	." - IBAN: <span id='iban'>".$me->bank_iban."</span>"
 	." - BIC: <span id='bic'>".$me->bank_swift."</span></div><br><br>"
@@ -29,7 +29,7 @@ if (file_exists("invoices")) $sent_invoices = explode(";",file_get_contents("inv
 $sent_invoices_new = array();
 
 // get number of invoices
-$result = BillomatAPI::call("/api/invoices?status=OPEN&payment_type=BANK_TRANSFER&page=1&per_page=1","",true);
+$result = callAPI("/api/invoices?status=OPEN&payment_type=BANK_TRANSFER&page=1&per_page=1","",true);
 $rateDetails = $result["details"];
 $rateLimit = $rateDetails["rateLimit"];
 $rateLimitReset = $rateDetails["rateLimitReset"];
@@ -44,7 +44,7 @@ if ($rateLimit == 0 || $total_records * 3 > $rateLimit){ // we hit the rate limi
 $page = 1;
 $maxPages = ceil(min($rateLimit,$total_records*3) / $per_page);
 while ($page <= $maxPages){
-	$result = BillomatAPI::call("/api/invoices?status=OPEN&payment_type=BANK_TRANSFER&page=$page&per_page=$per_page");
+	$result = callAPI("/api/invoices?status=OPEN&payment_type=BANK_TRANSFER&page=$page&per_page=$per_page");
 	if (is_array($result->invoices->invoice)) { 
 		$invoices_in = $result->invoices->invoice;
 	}
@@ -78,13 +78,13 @@ while ($page <= $maxPages){
 	}
 	$page++;
 }
-file_put_contents("invoices",implode(";",$sent_invoices_new));
+if($rateLimit > $total_records * 3) file_put_contents("invoices",implode(";",$sent_invoices_new));
 unset($result);
 // get clients' information
 $page = 1;
 while ($page <= $maxPages){
 	foreach ($clients as $client_id => $client){
-			$result = BillomatAPI::call("/api/clients/$client_id?page=$page&per_page=$per_page");
+			$result = callAPI("/api/clients/$client_id?page=$page&per_page=$per_page");
 			$client = $result->client;
 			$clients[$client_id]["client_number"] = $client->client_number;
 			$clients[$client_id]["name"] = $client->name;
@@ -141,3 +141,14 @@ echo '<script type="text/javascript">var all_invoices = '.json_encode($invoices)
 	 .'</script>';
 ?>
 </body>
+<?php
+	// handle API call errors
+	function callAPI($call,$payload="",$getDetails = false){
+		$result = BillomatAPI::call($call,$payload,$getDetails);
+		if (is_array($result) && isset($result['error'])) {
+			echo "<div class='error'>HTTP error ".$result['error']."</div>";
+			die();
+		}
+		else return $result;
+	}
+?>
