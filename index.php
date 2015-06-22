@@ -57,7 +57,7 @@ while ($page <= $maxPages){
 		// we might save some calls later
 		if (is_object($invoice)){ // ignore pagination attributes
 			$invoice_id = $invoice->id;
-			if (!in_array($invoice_id,$sent_invoices)){
+			if (!in_array($invoice_id,$sent_invoices) && $invoice->currency_code == "EUR"){
 				$invoices[$invoice_id]["id"] = $invoice_id;
 				$invoices[$invoice_id]["date"] = $invoice->date;
 				$invoices[$invoice_id]["invoice_number"] = $invoice->invoice_number; 
