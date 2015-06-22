@@ -41,7 +41,7 @@ Administration > Employees > click on employee > activate API access > Display A
 
 ## Testing
 
-There is a value TEST_EMAIL in the config.php. If you enter an email address there, all emails are send to that address. Also, all invoices will be shown in the invoice list, even after sending them.
+There is a value TEST_EMAIL in the config.php. If you enter an email address there, all emails are send to that address. Also, with this option set invoices will be not be deleted from the list after sending them.
 
 ## A note on rate limits
 
