@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Repository: https://github.com/MarvinLudwig/EPC069-12_for_Billomat
 // Licence: Apache 2.0
 // Version 1.0
@@ -17,6 +17,8 @@ function msg($id, $params = null){
 		case 'send_mail' : return 'Rechnung '.$params['invoice_number'].' senden';
 		case 'cut_text' : return 'Gekürzt würde der Text so aussehen:';
 		case 'cut_text_shall_we' : return 'Soll er gekürzt werden?';
+		case 'rate_limit' : return 'Es werden nicht alle Rechnungen angezeigt, da das Abruflimit erreicht wurde. Das Limit ist wieder verfügbar um ';
+		case 'rate_limit_raise' : return 'Sie können die Anzahl der Abrufe erhöhen, indem Sie die App hier registrieren: https://'.USER_ID.'.billomat.net/portal/apps und in der config.php die APP_ID und APP_SECRET eintragen.';
 	}
 }
 

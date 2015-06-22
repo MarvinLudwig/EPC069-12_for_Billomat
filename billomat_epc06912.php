@@ -41,7 +41,7 @@ else if ($data->action == "SEND_MAIL"){
 				$attachment->mimetype = "image/png";
 				$attachment->base64file = $qrCode;
 				$payload["email"]["attachments"]["attachment"] = $attachment;
-				$callResult = callAPI("/api/invoices/".$invoice->id."/email",$payload);
+				$callResult = BillomatAPI::call("/api/invoices/".$invoice->id."/email",$payload);
 				if (empty($callResult["error"])){
 					$result[] = array("id" => $invoice->id, "result" => "OK");
 					fputs($file, $invoice->id.";");

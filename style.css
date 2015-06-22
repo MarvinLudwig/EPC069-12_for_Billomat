@@ -13,7 +13,7 @@ td {
 td.name {
 	max-width: 30vw;
 }
-td.error {
+.error {
 	background-color: white;
 	color: #f00;
 	font-size:0.9em;

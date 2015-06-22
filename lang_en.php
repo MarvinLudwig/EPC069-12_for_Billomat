@@ -17,6 +17,8 @@ function msg($id, $params = null){
 		case 'send_mail' : return 'Send invoice '.$params['invoice_number'];
 		case 'cut_text' : return 'We can cut the text, it would look like that:';
 		case 'cut_text_shall_we' : return 'Shall we?';
+		case 'rate_limit' : return 'Not all invoices are shown, as we hit the rate limit. The rate limit will be reset at ';
+		case 'rate_limit_raise' : return 'You can raise the rate limit by registering the app here: https://'.USER_ID.'.billomat.net/portal/apps and filling in APP_ID and APP_SECRET into config.php';
 	}
 }
 

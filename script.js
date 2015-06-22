@@ -113,7 +113,7 @@ var FUNC =  {
 		}
 		else if (error.code == 2){ // we need input from user
 			var confirm_cut = false;
-			if (CUT_PAYMENT_REFERENCE == 0) confirm_cut = confirm(error.message+" "+PAYLOAD_BYTE_ERROR_MSG_1+"\r\n"+error.details+"\r\n"+PAYLOAD_BYTE_ERROR_MSG_2); 
+			if (CUT_PAYMENT_REFERENCE == 0) confirm_cut = confirm(error.message+" "+PAYLOAD_BYTE_ERROR_MSG_1+"\r\n"+error.details+"\r\n\r\n"+PAYLOAD_BYTE_ERROR_MSG_2); 
 			if (CUT_PAYMENT_REFERENCE == 1 || confirm_cut == true) {
 				all_invoices[invoice.id].payment_reference = error.details;
 				func(document.querySelector("#invoice_"+invoice.id).querySelector(".sendmail"));
