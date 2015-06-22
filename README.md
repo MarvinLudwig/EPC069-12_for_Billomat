@@ -23,11 +23,12 @@ This is a bunch of simple PHP scripts with a GUI that let you send your Billomat
         2                       - encoding 
         SCT                     - always SCT
         BHBLDEHHXXX             - your BIC  
-        Marvin Ludwig           - client name
+        Marvin Ludwig           - your name
         DE71110220330123456789  - your IBAN
         EUR6.9                  - invoice amount (always EUR)
         OTHR                    - always OTHR
         RE4  KD1 Testkunde 1    - payment reference (default: invoice #, invoice label, client #, client name)
+* After sending an invoice, the invoice will not be shown in the list after the next page reload
 
 ## Installation
 
